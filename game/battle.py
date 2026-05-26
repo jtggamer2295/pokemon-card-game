@@ -16,7 +16,7 @@ class BattleLog:
 
     def add(self, msg: str):
         self.messages.append(msg)
-        print(f"⚔️ {msg}")
+        print(f"BATTLE: {msg}")
 
     def add_damage(self, attacker: str, defender: str, attack_name: str, 
                    base_damage: int, final_damage: int, modifiers: dict):
