@@ -13,14 +13,14 @@ def cli():
     args = parser.parse_args()
 
     if args.kaggle_path:
-        print(f"🚀 Using Kaggle dataset from: {args.kaggle_path}")
+        print(f"Using Kaggle dataset from: {args.kaggle_path}")
         try:
             from ml.card_recognizer import CardRecognizer
             recognizer = CardRecognizer()
             recognizer.train_from_images(args.kaggle_path)
-            print("✅ Card Recognizer training complete!")
+            print("Card Recognizer training complete!")
         except Exception as e:
-            print(f"❌ Error training from Kaggle path: {e}")
+            print(f"Error training from Kaggle path: {e}")
 
     # After processing CLI args, run the main game
     main()
