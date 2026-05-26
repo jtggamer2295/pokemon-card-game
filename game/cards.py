@@ -22,6 +22,10 @@ class PokemonType(Enum):
     FAIRY = "Fairy"
     NORMAL = "Normal"
     DRAGON = "Dragon"
+    ICE = "Ice"
+    POISON = "Poison"
+    ROCK = "Rock"
+    GHOST = "Ghost"
 
 
 class CardType(Enum):
