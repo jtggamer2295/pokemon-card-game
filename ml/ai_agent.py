@@ -2,7 +2,10 @@
 """AI agents with proper turn handling."""
 
 import random
-import numpy as np
+try:
+    import numpy as np
+except ImportError:
+    np = None
 from typing import Optional, List
 from game.player import Player
 from game.cards import PokemonCard, EnergyCard, TrainerCard, CardType, get_type_effectiveness

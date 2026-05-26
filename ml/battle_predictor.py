@@ -1,12 +1,19 @@
 
 """Battle outcome predictor with proper feature extraction and model management."""
 
-import numpy as np
-import pandas as pd
-from sklearn.ensemble import GradientBoostingClassifier
-from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import StandardScaler
-from sklearn.metrics import accuracy_score, classification_report
+try:
+    import numpy as np
+    import pandas as pd
+    from sklearn.ensemble import GradientBoostingClassifier
+    from sklearn.model_selection import train_test_split
+    from sklearn.preprocessing import StandardScaler
+    from sklearn.metrics import accuracy_score, classification_report
+    ML_AVAILABLE = True
+except ImportError:
+    ML_AVAILABLE = False
+    np = None
+    pd = None
+
 import pickle
 import os
 import json
@@ -14,13 +21,24 @@ from typing import Optional
 
 
 class BattlePredictor:
-    """Predict battle outcomes based on game state features."""
+    """Predicts battle outcomes and evaluates game states."""
 
-    def __init__(self, model_path: str = "models/battle_predictor.pkl"):
+    def __init__(self, model_path: str = "models/battle_predictor.pkl", scaler_path: str = "models/scaler.pkl"):
         self.model_path = model_path
-        self.model = None
-        self.scaler = StandardScaler()
+        self.scaler_path = scaler_path
         self.is_trained = False
+        
+        if not ML_AVAILABLE:
+            print("ML dependencies not found. Battle predictor disabled.")
+            self.model = None
+            self.scaler = None
+            return
+
+        self.model = GradientBoostingClassifier(
+            n_estimators=100, learning_rate=0.1, max_depth=5, random_state=42
+        )
+        self.scaler = StandardScaler()
+        self.load_model()
         self.feature_names = [
             # Current player features
             "cp_hand", "cp_deck", "cp_prizes", "cp_bench",
